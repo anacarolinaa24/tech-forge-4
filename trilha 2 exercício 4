@@ -1,0 +1,16 @@
+class Produto {
+    nome: string;
+    preco: number;
+    quantidade: number;
+
+    constructor(nome: string, preco: number, quantidade: number) {
+        this.nome = nome;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    calcularValorTotalEstoque(): void {
+        const valorTotal = this.quantidade * this.preco;
+        console.log(`O valor total em estoque é R$${valorTotal}`);
+    }
+}
