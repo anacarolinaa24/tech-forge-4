@@ -1,1 +1,23 @@
+class ContaBancaria {
+    titular: string;
+    saldo: number;
 
+    constructor(titular: string, saldo: number = 0) {
+        this.titular = titular;
+        this.saldo = saldo;
+    }
+
+    depositar(valor: number): void {
+        this.saldo += valor;
+        console.log(`${valor} depositado, saldo atual é de: R$${this.saldo}`);
+    }
+
+    sacar(valor: number): void {
+        if (valor > this.saldo) {
+            console.log("Saldo insuficiente");
+        } else {
+            this.saldo -= valor;
+            console.log(`${valor} sacado, saldo atual de: R$${this.saldo}`);
+        }
+    }
+}
