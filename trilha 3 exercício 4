@@ -1,1 +1,59 @@
+class Animal {
+  private energia: number;
 
+  constructor(energiaInicial: number) {
+    this.energia = energiaInicial;
+  }
+
+  protected ajustarEnergia(valor: number): void {
+    this.energia += valor;
+  }
+
+  comer(quantidade: number): void {
+    this.ajustarEnergia(quantidade);
+    console.log(`O animal comeu e ganhou ${quantidade} de energia.`);
+  }
+
+  statusEnergia(): void {
+    console.log(`Energia atual: ${this.energia}`);
+  }
+}
+
+class Leao extends Animal {
+  constructor(energiaInicial: number) {
+    super(energiaInicial);
+  }
+
+  comer(quantidade: number): void {
+    console.log("O leão está caçando...");
+    this.ajustarEnergia(-10); 
+    console.log("O leão terminou a caçada e está comendo...");
+    super.comer(quantidade); 
+  }
+}
+
+class Passaro extends Animal {
+  constructor(energiaInicial: number) {
+    super(energiaInicial);
+  }
+
+  comer(quantidade: number): void {
+    console.log("O pássaro está comendo...");
+    super.comer(quantidade);
+  }
+}
+
+function processarAnimais(animais: Animal[]): void {
+  animais.forEach((animal, index) => {
+    console.log(`Animal ${index + 1}:`);
+    animal.comer(20);
+    animal.statusEnergia();
+    console.log("");
+  });
+}
+const leao = new Leao(50);
+const passaro = new Passaro(30);
+
+const animais: Animal[] = [leao, passaro];
+
+processarAnimais(animais);
