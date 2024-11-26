@@ -1,0 +1,32 @@
+interface ProdutoLoja {
+  codigo: number;
+  nome: string;
+}
+
+class Loja {
+  private produtos: ProdutoLoja[];
+
+  constructor() {
+    this.produtos = []; 
+  }
+
+  adicionarProduto(produto: ProdutoLoja): void {
+    this.produtos.push(produto);
+  }
+
+  buscarProdutoPorCodigo(codigo: number): ProdutoLoja | undefined {
+    return this.produtos.find(produto => produto.codigo === codigo);
+  }
+}
+
+const minhaLoja = new Loja();
+
+minhaLoja.adicionarProduto({ codigo: 1, nome: "Livro" });
+minhaLoja.adicionarProduto({ codigo: 2, nome: "Boné" });
+minhaLoja.adicionarProduto({ codigo: 3, nome: "Garrafa" });
+
+const produtoEncontrado = minhaLoja.buscarProdutoPorCodigo(2);
+console.log(produtoEncontrado); 
+
+const produtoNaoEncontrado = minhaLoja.buscarProdutoPorCodigo(5);
+console.log(produtoNaoEncontrado); 
