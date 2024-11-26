@@ -1,1 +1,67 @@
+abstract class TaskManager {
+  protected tasks: Set<string>;
+
+  constructor() {
+    this.tasks = new Set(); 
+  }
+
+  abstract addTask(task: string): void;
+
+  abstract listTasks(): string[];
+}
+
+class Project extends TaskManager {
+  private projectName: string;
+
+  constructor(projectName: string) {
+    super(); 
+    this.projectName = projectName;
+  }
+
+  addTask(task: string): void {
+    if (!this.tasks.has(task)) {
+      this.tasks.add(task);
+      console.log(`Tarefa "${task}" adicionada ao projeto "${this.projectName}".`);
+    } else {
+      console.log(`A tarefa "${task}" já existe no projeto "${this.projectName}".`);
+    }
+  }
+
+  listTasks(): string[] {
+    console.log(`Tarefas do projeto "${this.projectName}":`);
+    return Array.from(this.tasks);
+  }
+}
+
+class DailyTasks extends TaskManager {
+  constructor() {
+    super(); 
+  }
+
+  addTask(task: string): void {
+    if (!this.tasks.has(task)) {
+      this.tasks.add(task);
+      console.log(`Tarefa diária "${task}" adicionada.`);
+    } else {
+      console.log(`A tarefa diária "${task}" já foi adicionada.`);
+    }
+  }
+
+  listTasks(): string[] {
+    console.log("Tarefas diárias:");
+    return Array.from(this.tasks);
+  }
+}
+
+const projeto1 = new Project("Construção de Site");
+projeto1.addTask("Definir layout");
+projeto1.addTask("Criar página inicial");
+projeto1.addTask("Criar página inicial"); 
+console.log(projeto1.listTasks());
+
+const tarefasDiarias = new DailyTasks();
+tarefasDiarias.addTask("Comprar pão");
+tarefasDiarias.addTask("Fazer exercícios");
+tarefasDiarias.addTask("Comprar pão"); 
+console.log(tarefasDiarias.listTasks());
 
