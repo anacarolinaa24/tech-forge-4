@@ -1,0 +1,30 @@
+class Biblioteca {
+  constructor() {    
+    this.livros = [];
+  }
+  
+  adicionarLivro(livro) {
+    this.livros.push(livro);
+  }
+
+  buscarLivrosDisponiveis() {
+    return this.livros.filter(livro => livro.disponivel === true);
+  }
+}
+
+const minhaBiblioteca = new Biblioteca();
+
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e a Pedra Filosofal", autor: "J.K. Rowling", disponivel: true });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e a Câmara Secreta", autor: "J.K. Rowling", disponivel: false });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e o Prisioneiro de Azkaban", autor: "J.K. Rowling", disponivel: true });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e o Cálice de Fogo", autor: "J.K. Rowling", disponivel: true });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e a Ordem da Fênix", autor: "J.K. Rowling", disponivel: false });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e o Enigma do Príncipe", autor: "J.K. Rowling", disponivel: true });
+minhaBiblioteca.adicionarLivro({ titulo: "Harry Potter e as Relíquias da Morte", autor: "J.K. Rowling", disponivel: true });
+
+const livrosDisponiveis = minhaBiblioteca.buscarLivrosDisponiveis();
+
+console.log("Livros disponíveis:");
+livrosDisponiveis.forEach(livro => {
+  console.log(`${livro.titulo} - ${livro.autor}`);
+});
