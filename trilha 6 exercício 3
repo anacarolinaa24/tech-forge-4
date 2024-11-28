@@ -1,1 +1,36 @@
+class ContactValidator {
+  validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new Error("Endereço de email inválido.");
+    }
+    return true;
+  }
+}
+
+class EmailSender {
+  private validator: ContactValidator;
+
+  constructor(validator: ContactValidator) {
+    this.validator = validator;
+  }
+
+  sendEmail(email: string, subject: string, message: string): void {
+    if (this.validator.validateEmail(email)) {
+      console.log(`Enviando email para ${email}...`);
+      console.log(`Assunto: ${subject}`);
+      console.log(`Mensagem: ${message}`);
+      console.log("Email enviado com sucesso!");
+    }
+  }
+}
+
+const validator = new ContactValidator();
+const emailSender = new EmailSender(validator);
+
+try {
+  emailSender.sendEmail("teste@exemplo.com", "Olá!", "Este é um teste de envio de email.");
+} catch (error) {
+  console.error(error.message);
+}
 
