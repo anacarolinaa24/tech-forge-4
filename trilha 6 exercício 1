@@ -1,1 +1,111 @@
+type CartItem = {
+  name: string;
+  price: number;
+  quantity: number;
+};
 
+class Cart {
+  private items: CartItem[] = [];
+  private totalPrice: number = 0;
+
+  addItem(itemName: string, price: number, quantity: number): void {
+    this.items.push({ name: itemName, price, quantity });
+    this.totalPrice += price * quantity;
+  }
+
+  getTotalPrice(): number {
+    return this.totalPrice;
+  }
+
+  getItems(): CartItem[] {
+    return this.items;
+  }
+
+  toString(): string {
+    return `Items: ${JSON.stringify(this.items)}\nTotal Price: $${this.totalPrice.toFixed(2)}`;
+  }
+}
+
+class Payment {
+  private status: string = "Pending";
+
+  processPayment(totalPrice: number, amount: number): number {
+    if (amount >= totalPrice) {
+      this.status = "Paid";
+      return amount - totalPrice; // Retorna o troco
+    } else {
+      throw new Error("Payment amount is insufficient.");
+    }
+  }
+
+  getStatus(): string {
+    return this.status;
+  }
+
+  toString(): string {
+    return `Payment Status: ${this.status}`;
+  }
+}
+
+class Shipping {
+  private status: string = "Not Shipped";
+
+  updateStatus(status: string, paymentStatus: string): void {
+    if (paymentStatus === "Paid") {
+      this.status = status;
+    } else {
+      throw new Error("Payment must be completed before shipping.");
+    }
+  }
+
+  getStatus(): string {
+    return this.status;
+  }
+
+  toString(): string {
+    return `Shipping Status: ${this.status}`;
+  }
+}
+
+class Order {
+  private cart: Cart;
+  private payment: Payment;
+  private shipping: Shipping;
+
+  constructor() {
+    this.cart = new Cart();
+    this.payment = new Payment();
+    this.shipping = new Shipping();
+  }
+
+  addItemToCart(itemName: string, price: number, quantity: number): void {
+    this.cart.addItem(itemName, price, quantity);
+  }
+
+  processPayment(amount: number): number {
+    return this.payment.processPayment(this.cart.getTotalPrice(), amount);
+  }
+
+  updateShippingStatus(status: string): void {
+    this.shipping.updateStatus(status, this.payment.getStatus());
+  }
+
+  toString(): string {
+    return `${this.cart.toString()}\n${this.payment.toString()}\n${this.shipping.toString()}`;
+  }
+}
+
+const order = new Order();
+order.addItemToCart("Book", 20.0, 2);
+order.addItemToCart("Pen", 2.5, 5);
+console.log(order.toString());
+
+try {
+  const change = order.processPayment(50.0);
+  console.log(`Change: $${change.toFixed(2)}`);
+} catch (error) {
+  console.error(error.message);
+}
+
+order.updateShippingStatus("Shipped");
+console.log(order.toString());
