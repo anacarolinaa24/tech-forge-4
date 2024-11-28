@@ -1,1 +1,36 @@
+class EmailNotification {
+  send(email: string, message: string): void {
+    console.log(`Enviando email para ${email} com a mensagem: ${message}`);
+  }
+}
+
+class UserManager {
+  private users: { name: string; email: string }[] = []; 
+  private notificationService: EmailNotification;
+
+  constructor(notificationService: EmailNotification) {
+    this.notificationService = notificationService; 
+  }
+
+  createUser(name: string, email: string): void {
+    const user = { name, email };
+    this.users.push(user); 
+    this.notificationService.send(email, `Bem-vindo, ${name}!`); 
+  }
+
+  listUsers(): void {
+    console.log("Usuários cadastrados:");
+    this.users.forEach((user) =>
+      console.log(`Nome: ${user.name}, Email: ${user.email}`)
+    );
+  }
+}
+
+
+const notificationService = new EmailNotification();
+const userManager = new UserManager(notificationService);
+
+userManager.createUser("Maria", "maria@outlook.com");
+userManager.createUser("Ana", "ana@outlook.com");
+userManager.listUsers();
 
